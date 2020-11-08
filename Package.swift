@@ -2,9 +2,9 @@
 import PackageDescription
 
 let package = Package(
-    name: "FontAwsome",
+    name: "FontAwesome",
     products: [
-        .library(name: "FontAwsome", targets: ["FontAwsome"])
+        .library(name: "FontAwesome", targets: ["FontAwesome"])
     ],
     targets: [
         .target(name: "FontAwesome", path: "Source")
