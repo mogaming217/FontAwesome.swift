@@ -7,6 +7,6 @@ let package = Package(
         .library(name: "FontAwesome", targets: ["FontAwesome"])
     ],
     targets: [
-        .target(name: "FontAwesome", path: "Source")
+        .target(name: "FontAwesome", path: "./FontAwesome")
     ]
 )
