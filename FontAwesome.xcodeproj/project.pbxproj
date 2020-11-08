@@ -100,7 +100,7 @@
 		8401A8C81B39601400269D14 = {
 			isa = PBXGroup;
 			children = (
-				8401A8D41B39601400269D14 /* FontAwesome */,
+				D5FEED97255791C8003D43B2 /* Source */,
 				8401A8E11B39601400269D14 /* FontAwesomeTests */,
 				8401A8D31B39601400269D14 /* Products */,
 			);
@@ -160,6 +160,14 @@
 				8401A8E31B39601400269D14 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D5FEED97255791C8003D43B2 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				8401A8D41B39601400269D14 /* FontAwesome */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
