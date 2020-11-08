@@ -155,28 +155,32 @@ public extension UIImage {
 
 private class FontLoader {
     class func loadFont(_ name: String) {
-        let bundle = Bundle(for: FontLoader.self)
-        let identifier = bundle.bundleIdentifier
-
-        var fontURL: URL
-        if identifier?.hasPrefix("org.cocoapods") == true {
-            // If this framework is added using CocoaPods, resources is placed under a subdirectory
-            fontURL = bundle.url(forResource: name, withExtension: "otf", subdirectory: "FontAwesome.swift.bundle")!
-        } else {
-            fontURL = bundle.url(forResource: name, withExtension: "otf")!
-        }
-
         guard
-            let data = try? Data(contentsOf: fontURL),
-            let provider = CGDataProvider(data: data as CFData),
-            let font = CGFont(provider)
-            else { return }
+                    let fontURL = URL.fontURL(for: name) as CFURL?
+                    else { return }
 
-        var error: Unmanaged<CFError>?
-        if !CTFontManagerRegisterGraphicsFont(font, &error) {
-            let errorDescription: CFString = CFErrorCopyDescription(error!.takeUnretainedValue())
-            guard let nsError = error?.takeUnretainedValue() as AnyObject as? NSError else { return }
-            NSException(name: NSExceptionName.internalInconsistencyException, reason: errorDescription as String, userInfo: [NSUnderlyingErrorKey: nsError]).raise()
+                var error: Unmanaged<CFError>?
+                if !CTFontManagerRegisterFontsForURL(fontURL, .process, &error) {
+                    let errorDescription: CFString = CFErrorCopyDescription(error!.takeUnretainedValue())
+                    guard let nsError = error?.takeUnretainedValue() as AnyObject as? NSError else { return }
+                    NSException(name: NSExceptionName.internalInconsistencyException, reason: errorDescription as String, userInfo: [NSUnderlyingErrorKey: nsError]).raise()
+                }
+    }
+}
+
+extension URL {
+    static func fontURL(for fontName: String) -> URL? {
+        let bundle = Bundle(for: FontLoader.self)
+
+        if let fontURL = bundle.url(forResource: fontName, withExtension: "otf") {
+            return fontURL
         }
+
+        // If this framework is added using CocoaPods, resources is placed under a subdirectory
+        if let fontURL = bundle.url(forResource: fontName, withExtension: "otf", subdirectory: "FontAwesome.swift.bundle") {
+            return fontURL
+        }
+
+        return nil
     }
 }
