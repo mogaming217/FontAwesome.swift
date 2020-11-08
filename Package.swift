@@ -7,6 +7,6 @@ let package = Package(
         .library(name: "FontAwsome.swift", targets: ["FontAwsome"])
     ],
     targets: [
-        .target(name: "MyStaticLib")
+        .target(name: "FontAwsome")
     ]
 )
